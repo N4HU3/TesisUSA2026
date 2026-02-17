@@ -1,0 +1,11 @@
+# Modelo arquitectónico para agentes de inteligencia artificial orquestados
+
+## Resumen ejecutivo
+
+Este informe propone una ruta de investigación y un diseño de tesis defendible para construir y sustentar un **modelo arquitectónico de referencia** para **agentes de IA orquestados**, acompañado de un **marco práctico de decisión** para elegir entre enfoques **low-code** y desarrollo **basado en código**. El problema central no es “qué herramienta es mejor”, sino **bajo qué condiciones** (carga, criticidad, gobernanza, mantenibilidad, seguridad y observabilidad) la orquestación low-code produce ventajas medibles y cuándo sus límites justifican una implementación con código y/o microservicios.
+
+La revisión del estado del arte muestra cuatro líneas maduras pero aún poco integradas: (i) arquitectura de software orientada a **atributos de calidad** y a evaluación temprana (ATAM, QAW, escenarios, utilidades), (ii) sistemas de agentes clásicos y multiagente, hoy extendidos por **agentes basados en LLM** con memoria, planificación y uso de herramientas (ReAct, Toolformer, MRKL; encuestas recientes sobre agentes autónomos y su evaluación), (iii) orquestación de workflows desde BPM/Workflow Management (BPMN, patrones de workflow, DAGs y máquinas de estado), y (iv) low-code/no-code como paradigma socio-técnico con desafíos recurrentes de gobernanza, deuda técnica y alineación con TI corporativa.
+
+La contribución propuesta es doble: (a) una **arquitectura de referencia** (componentes y flujos) que integra canal conversacional, orquestador, herramientas, memoria/RAG, mensajería, almacenamiento de objetos y observabilidad; (b) una **matriz de decisión con umbrales** y recomendaciones accionables. La metodología sugerida sigue un **diseño de estudio de caso** con triangulación (Yin), usando artefactos y evidencia empírica factible **sin reescribir todo**: modelado arquitectónico, análisis de documentación, entrevistas, escenarios de calidad (ATAM/QAW), y pruebas de rendimiento simuladas o modeladas. El informe cierra con un plan de evaluación, limitaciones y sesgos, un conjunto priorizado de fuentes y **30 búsquedas académicas exactas**, además de un cronograma semanal para completar la tesis en 3 meses.
+
+[... contenido truncado para brevedad en este archivo de ejemplo ...]
