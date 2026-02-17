@@ -10,24 +10,24 @@
 
 ```mermaid
 flowchart LR
-  U[Usuarios<br/>Estudiantes / Docentes / Admin] --> CH[Canal conversacional<br/>Web / Chat / Helpdesk]
+  U[Usuarios\nEstudiantes / Docentes / Admin] --> CH[Canal conversacional\nWeb / Chat / Helpdesk]
 
   CH --> GW[Gateway / Webhook receptor]
 
   subgraph Orquestacion
-    ORCH[Orquestador de workflows<br/>Plataforma low-code]
-    AG[Runtime de agente LLM<br/>Planificación + herramientas]
+    ORCH[Orquestador de workflows\n(p.ej. n8n, Temporal, Power Automate)]
+    AG[Runtime de agente LLM\n(p.ej. OpenAI, Claude, Llama + servidor de tools)]
     ORCH -->|invoca / coordina| AG
   end
 
   GW --> ORCH
 
   subgraph Conocimiento
-    SRC[Documentos institucionales<br/>Reglamentos, FAQs, horarios] --> ING[Ingesta / Normalización]
-    ING --> OBJ[Almacenamiento de objetos<br/>Documentos en bruto]
-    ING --> META[(BD relacional / metadatos)]
-    ING --> EMB[Embeddings]
-    EMB --> VEC[(Vector DB<br/>Índice semántico)]
+    SRC[Documentos institucionales\nReglamentos, FAQs, horarios] --> ING[Ingesta / Normalización]
+    ING --> OBJ[Almacenamiento de objetos\n(p.ej. S3, Blob Storage)]
+    ING --> META[(BD relacional / metadatos)\n(p.ej. Postgres)]
+    ING --> EMB[Embeddings\n(p.ej. OpenAI, Instructor)]
+    EMB --> VEC[(Vector DB\n(p.ej. pgvector, Qdrant, Chroma))]
   end
 
   AG -->|consultas semánticas| VEC
@@ -35,13 +35,13 @@ flowchart LR
   AG -->|recupera documento| OBJ
 
   subgraph Integracion
-    MQ[(Broker de mensajería / eventos)]
+    MQ[(Broker de mensajería / eventos)\n(p.ej. RabbitMQ, Kafka, Service Bus)]
     ORCH <--> MQ
     AG <--> MQ
   end
 
   subgraph Observabilidad
-    OTEL[Telemetría / Trazas / Logs] --> GRAF[Dashboards y alertas]
+    OTEL[Telemetría / Trazas / Logs\n(p.ej. OpenTelemetry)] --> GRAF[Dashboards y alertas\n(p.ej. Grafana, New Relic)]
     ORCH --> OTEL
     AG --> OTEL
     MQ --> OTEL
@@ -57,30 +57,23 @@ flowchart LR
 flowchart TD
   A[Mensaje del usuario] --> B[Clasificar intención y dominio]
 
-  B -->|Fuera de dominio / alto riesgo| Z[Respuesta segura
-("no sé" + canal oficial)]
+  B -->|Fuera de dominio / alto riesgo| Z[Respuesta segura\n("no sé" + canal oficial)]
 
-  B -->|Intención soportada| C[Construir plan de acción
-(RAG + tools)]
+  B -->|Intención soportada| C[Construir plan de acción\n(RAG + tools)]
 
   C --> D[Recuperación: consulta a Vector DB]
-  D --> E[Filtrar y seleccionar evidencia
-(según contexto y políticas)]
+  D --> E[Filtrar y seleccionar evidencia\n(según contexto y políticas)]
 
   E --> F{¿Se requieren herramientas externas?}
-  F -->|Sí| G[Llamadas a herramientas
-(APIs, bases de datos, servicios internos)]
-  F -->|No| H[Saltar a composición de respuesta]
+  F -->|Sí| G[Llamadas a herramientas\n(APIs, bases de datos, servicios internos)]
+  F -->|No| H[Pasar directamente a composición de respuesta]
 
-  G --> H[Componer respuesta con
-resultados de tools + evidencia]
+  G --> H[Componer respuesta con\nresultados de tools + evidencia]
 
-  H --> I[Registrar ejecución
-(run, tool calls, costos, métricas)]
+  H --> I[Registrar ejecución\n(run, tool calls, costos, métricas)]
   I --> J[Enviar respuesta al usuario]
 
-  J --> K[Monitoreo / alertas
-(revisiones humanas si hay fallos)]
+  J --> K[Monitoreo / alertas\n(revisiones humanas si hay fallos)]
 ```
 
 ## 3. Modelo de datos mínimo (conceptual)
@@ -176,3 +169,6 @@ erDiagram
   - La discusión sobre observabilidad y evaluación de agentes.
 - En el texto LaTeX, se podrán exportar estos diagramas a imágenes o utilizar
   una herramienta que genere SVG/PNG a partir de Mermaid.
+- Los nombres entre paréntesis de cada bloque indican tecnologías concretas
+  candidatas para el caso de estudio, pero no son obligatorias; sirven como
+  guía para el diseño e implementación. 
